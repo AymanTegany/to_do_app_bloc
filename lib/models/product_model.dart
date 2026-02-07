@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:to_do_app_bloc/models/rating_model.dart';
+import 'rating_model.dart';
 
 class ProductModel extends Equatable {
   final int id;
@@ -10,16 +10,27 @@ class ProductModel extends Equatable {
   final String image;
   final RatingModel ratingModel;
 
-  ProductModel({
+  const ProductModel({
     required this.id,
     required this.title,
     required this.price,
     required this.description,
     required this.category,
     required this.image,
-
     required this.ratingModel,
   });
+
+  factory ProductModel.fromMap(Map<String, dynamic> map) {
+    return ProductModel(
+      id: map['id'],
+      title: map['title'],
+      price: (map['price'] as num).toDouble(),
+      description: map['description'],
+      category: map['category'],
+      image: map['image'],
+      ratingModel: RatingModel.fromMap(map['rating']),
+    );
+  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -29,21 +40,11 @@ class ProductModel extends Equatable {
       'description': description,
       'category': category,
       'image': image,
-      'ratingModel': ratingModel.toMap(),
+      'rating': ratingModel.toMap(),
     };
   }
 
-  factory ProductModel.fromMap(Map<String, dynamic> map) {
-    return ProductModel(
-      id: map['id'],
-      title: map['title'],
-      price: map['price'],
-      description: map['description'],
-      category: map['category'],
-      image: map['image'],
-      ratingModel: RatingModel.fromMap(map['ratingModel']),
-    );
-  }
   @override
-  List<Object?> get props => [id, title, price, description, category, image];
+  List<Object?> get props =>
+      [id, title, price, description, category, image, ratingModel];
 }

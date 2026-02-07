@@ -2,15 +2,33 @@ part of 'product_cubit.dart';
 
 sealed class ProductState extends Equatable {
   const ProductState();
+
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
-final class ProductLoding extends ProductState {
+// الحالة الابتدائية
+final class ProductInitial extends ProductState {}
 
+// تحميل
+final class ProductLoading extends ProductState {}
 
+// نجاح + الداتا
+final class ProductLoaded extends ProductState {
+  final List<ProductModel> products;
+
+  const ProductLoaded(this.products);
+
+  @override
+  List<Object?> get props => [products];
 }
-final class ProductLoaded extends ProductState {}
-final class ProductErrorMessage extends ProductState {}
 
+// خطأ + رسالة
+final class ProductErrorMessage extends ProductState {
+  final String message;
 
+  const ProductErrorMessage(this.message);
+
+  @override
+  List<Object?> get props => [message];
+}
